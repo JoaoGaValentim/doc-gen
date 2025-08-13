@@ -1,0 +1,8 @@
+.zed/
+.vscode/
+bin/
+build/
+dist/
+.DS_Store
+*.o
+*.out
