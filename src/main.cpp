@@ -10,7 +10,7 @@
 #include <string>
 #include <vector>
 
-constexpr std::string VERSION = "VERSION v0.0.3";
+constexpr std::string VERSION = "VERSION v0.0.4";
 
 void help() {
   std::cout << "USE THIS COMMANDS:" << '\n';
