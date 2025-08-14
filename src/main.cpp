@@ -1,5 +1,6 @@
 #include "../include/Document.hpp"
 #include <cstdlib>
+#include <format>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -17,7 +18,6 @@ void generate(int argc, const char **argv) {
 
   if (argc == 2) {
     std::string arg = argv[1];
-
     // Verifica se começa com '-'
     if (!arg.empty() && arg[0] == '-') {
       // Verifica se o argumento está na lista de diretivas
@@ -25,7 +25,7 @@ void generate(int argc, const char **argv) {
           directives.end()) {
         std::string docType = arg.substr(1); // Remove o '-'
         Document document(docType);
-        std::cout << document.generate() << "\n";
+        std::cout << std::format("DOCUMENT = {0}", document.generate()) << "\n";
         return;
       }
     }
