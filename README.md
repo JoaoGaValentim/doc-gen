@@ -46,16 +46,19 @@ private:
 
 #endif
 ```
+
 ### Características e funcionalidades
 
 - Ao instanciar a classe `Document` da seguinte maneira:
+
 ```cpp
     Document doc("cpf"); // tipo de documento que queremos gerar
 ```
+
 incializaermos o construtor com o parâmetro `std::string document`, que será verificado dentro da
 função `std::string generate()`
-- Usaremos dessa classe um único método publico: `std::string generate()`, capaz de gerar nosso documento
 
+- Usaremos dessa classe um único método publico: `std::string generate()`, capaz de gerar nosso documento
 
 ## Instalando
 
@@ -77,19 +80,20 @@ sudo cmake --install build # 7
 - `-cpf` vai gerar 1
 - `-cnpj` vai gerar cnpj
 - `-h` vai abrir o menu de ajuda
+- `-v` ou `-version` vai exibir a versão
 
 ```bash
 docGen -h # help
 ```
 
 ```bash
-docGen -rg
+docGen -rg 10 # ou nenhum número para gerar só um
 ```
 
 ```bash
-docGen -cpf
+docGen -cpf 10 # ou nenhum número para gerar só um
 ```
 
 ```bash
-docGen -cnpj
+docGen -cnpj 10 # ou nenhum número para gerar só um
 ```
