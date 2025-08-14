@@ -1,3 +1,8 @@
+/**
+ * @author João Gabriel Valentim Theodoro
+ * @version 0.2
+ * @date 2025-08-14
+ * */
 #include "../include/Document.hpp"
 #include <cstdlib>
 #include <format>
