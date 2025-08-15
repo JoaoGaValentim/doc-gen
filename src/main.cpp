@@ -52,6 +52,38 @@ int get_total_documents(const char **argv) {
   return !argv[2] ? 1 : std::isdigit(*argv[2]) ? atoi(argv[2]) : 0;
 }
 
+void start_generation(std::vector<std::string> &documents,
+                      std::vector<std::string> directives, const char **argv,
+                      std::string arg) {
+  int total = get_total_documents(argv);
+  if (total != 0) {
+    documents = generate_document_it(total, directives, arg);
+    for (auto &document_value : documents) {
+      std::cout << std::format("DOCUMENTO = {0}", document_value) << '\n';
+    }
+
+    std::string arg_file = argv[3];
+    std::string file_name = "output.txt";
+    if (arg_file == "-o") {
+      std::ofstream file;
+      file.open(file_name);
+      if (file.is_open()) {
+        for (auto &document_value : documents) {
+          file << document_value << '\n';
+        }
+        file.close();
+      }
+    }
+    if (arg_file != "-o") {
+      help();
+    }
+    return;
+  }
+
+  help();
+  return;
+}
+
 void execute_commands(std::vector<std::string> &directives, int &argc,
                       const char **argv) {
   std::string arg = argv[1];
@@ -75,33 +107,7 @@ void execute_commands(std::vector<std::string> &directives, int &argc,
   }
 
   if (argc == 2 || argc == 3 || argc <= 4) {
-    int total = get_total_documents(argv);
-    if (total != 0) {
-      documents = generate_document_it(total, directives, arg);
-      for (auto &document_value : documents) {
-        std::cout << std::format("DOCUMENTO = {0}", document_value) << '\n';
-      }
-
-      std::string arg_file = argv[3];
-      std::string file_name = "output.txt";
-      if (arg_file == "-o") {
-        std::ofstream file;
-        file.open(file_name);
-        if (file.is_open()) {
-          for (auto &document_value : documents) {
-            file << document_value << '\n';
-          }
-          file.close();
-        }
-      }
-      if (arg_file != "-o") {
-        help();
-      }
-      return;
-    }
-
-    help();
-    return;
+    start_generation(documents, directives, argv, arg);
   }
 
   if (argc > 4) {
