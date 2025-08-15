@@ -47,37 +47,44 @@ std:;
   return documents;
 }
 
+int get_total_documents(const char **argv) {
+  return !argv[2] ? 1 : std::isdigit(*argv[2]) ? atoi(argv[2]) : 0;
+}
+
 void execute_commands(std::vector<std::string> &directives, int &argc,
                       const char **argv) {
   std::string arg = argv[1];
   std::string document{};
   std::vector<std::string> documents{};
+
   bool is_in_directive =
       std::find(directives.begin(), directives.end(), arg) != directives.end();
+  bool show_version = arg == "-version" || arg == "-v";
+  bool show_help = !arg.starts_with('-') || !is_in_directive || arg == "-h" ||
+                   arg == "-help";
 
-  bool show_help = arg == "-version" || arg == "-v" || !arg.starts_with('-') ||
-                   !is_in_directive;
+  if (show_version) {
+    version();
+    return;
+  }
 
   if (show_help) {
     help();
     return;
   }
 
-  if (arg == "-h" || arg == "-help") {
-    help();
-    return;
-  }
-
   if (argc == 2 || argc == 3) {
-    int total_args = !argv[2] ? 1 : std::isdigit(*argv[2]) ? atoi(argv[2]) : 0;
-    if (total_args == 0) {
-      help();
+    int total = get_total_documents(argv);
+    if (total != 0) {
+      documents = generate_document_it(total, directives, arg);
+      for (auto &document_value : documents) {
+        std::cout << std::format("DOCUMENTO = {0}", document_value) << '\n';
+      }
       return;
     }
-    documents = generate_document_it(total_args, directives, arg);
-    for (auto &document_value : documents) {
-      std::cout << std::format("DOCUMENTO = {0}", document_value) << '\n';
-    }
+
+    help();
+    return;
   }
 
   if (argc > 3) {
