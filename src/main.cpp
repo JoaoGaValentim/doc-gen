@@ -21,7 +21,7 @@ void help() {
   std::cout << "  -cnpj <opt-total> to generate CNPJ" << '\n';
   std::cout << "  -h or -help <opt-total> to open this documentation" << '\n';
   std::cout << "  -o use with \"docGen [doc] [total >= 1] -o\" generate "
-               "output.txt file"
+               "[first_doc]_[directive].txt file"
             << "\n";
   std::cout << "  -v or -version show version." << '\n';
 }
@@ -63,7 +63,8 @@ void start_generation(std::vector<std::string> &documents,
     }
 
     std::string arg_file = argv[3];
-    std::string file_name = "output.txt";
+    std::string doc_type = arg.substr(1);
+    std::string file_name = std::format("{0}_{1}.txt", doc_type, documents[0]);
     if (arg_file == "-o") {
       std::ofstream file(file_name, std::ios::app);
       if (file.is_open()) {
