@@ -79,7 +79,8 @@ sudo cmake --install build # 7
 - `-rg` vai gerar um rg
 - `-cpf` vai gerar 1
 - `-cnpj` vai gerar cnpj
-- `-h` vai abrir o menu de ajuda
+- `-o`  vai gerar um arquivo com os documentos
+- `-h` ou `-help` vai abrir o menu de ajuda
 - `-v` ou `-version` vai exibir a versão
 
 ```bash
