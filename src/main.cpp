@@ -7,6 +7,7 @@
 #include <cctype>
 #include <cstdlib>
 #include <format>
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -19,9 +20,9 @@ void help() {
   std::cout << "  -cpf <opt-total> to generate CPF" << '\n';
   std::cout << "  -cnpj <opt-total> to generate CNPJ" << '\n';
   std::cout << "  -h or -help <opt-total> to open this documentation" << '\n';
-  std::cout
-      << "  -o [file-name] use with \"docGen [doc] [total >= 1] -o [file]\""
-      << "\n";
+  std::cout << "  -o use with \"docGen [doc] [total >= 1] -o\" generate "
+               "output.txt file"
+            << "\n";
   std::cout << "  -v or -version show version." << '\n';
 }
 
@@ -73,12 +74,28 @@ void execute_commands(std::vector<std::string> &directives, int &argc,
     return;
   }
 
-  if (argc == 2 || argc == 3) {
+  if (argc == 2 || argc == 3 || argc <= 4) {
     int total = get_total_documents(argv);
     if (total != 0) {
       documents = generate_document_it(total, directives, arg);
       for (auto &document_value : documents) {
         std::cout << std::format("DOCUMENTO = {0}", document_value) << '\n';
+      }
+
+      std::string arg_file = argv[3];
+      std::string file_name = "output.txt";
+      if (arg_file == "-o") {
+        std::ofstream file;
+        file.open(file_name);
+        if (file.is_open()) {
+          for (auto &document_value : documents) {
+            file << document_value << '\n';
+          }
+          file.close();
+        }
+      }
+      if (arg_file != "-o") {
+        help();
       }
       return;
     }
@@ -87,22 +104,20 @@ void execute_commands(std::vector<std::string> &directives, int &argc,
     return;
   }
 
-  if (argc > 3) {
+  if (argc > 4) {
     help();
     return;
   }
 }
 
-void run_app(int argc, const char **argv) {
-  std::vector<std::string> directives{"-rg", "-cpf", "-cnpj"};
-  execute_commands(directives, argc, argv);
-}
-
-int main(int argc, const char **argv) {
+int run_app(int argc, const char **argv) {
   if (argc < 2) {
     help();
     return EXIT_FAILURE;
   }
-  run_app(argc, argv);
+  std::vector<std::string> directives{"-rg", "-cpf", "-cnpj"};
+  execute_commands(directives, argc, argv);
   return EXIT_SUCCESS;
 }
+
+int main(int argc, const char **argv) { run_app(argc, argv); }
