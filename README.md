@@ -97,3 +97,10 @@ docGen -cpf 10 # ou nenhum número para gerar só um
 ```bash
 docGen -cnpj 10 # ou nenhum número para gerar só um
 ```
+
+
+## Gere arquivos de texto com documentos
+
+```bash
+docGen -cnpj 10 -o # use -o para criar um documento com (CPF, RG ou CNPJ)
+```
