@@ -65,8 +65,7 @@ void start_generation(std::vector<std::string> &documents,
     std::string arg_file = argv[3];
     std::string file_name = "output.txt";
     if (arg_file == "-o") {
-      std::ofstream file;
-      file.open(file_name);
+      std::ofstream file(file_name, std::ios::app);
       if (file.is_open()) {
         for (auto &document_value : documents) {
           file << document_value << '\n';
