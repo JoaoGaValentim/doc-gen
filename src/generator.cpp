@@ -7,10 +7,10 @@
 #include <string>
 #include <vector>
 
-constexpr std::string VERSION = "VERSION v0.0.4";
+constexpr auto VERSION = "VERSION v0.0.5";
 
 void help() {
-  std::cout << "USE THIS COMMANDS:" << '\n';
+  std::cout << "🇧🇷 USE THIS COMMANDS:" << '\n';
   std::cout << "  -rg <opt-total> to generate RG" << '\n';
   std::cout << "  -cpf <opt-total> to generate CPF" << '\n';
   std::cout << "  -cnpj <opt-total> to generate CNPJ" << '\n';
